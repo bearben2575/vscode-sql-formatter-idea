@@ -43,6 +43,9 @@ UPDATE opc_server_config " +
   - 简单参数：`#{paramName}`
   - 复杂参数：`#{user.name}`
   - 带类型参数：`#{param,jdbcType=VARCHAR}`
+ 
+![PixPin_2025-03-06_12-28-35](https://github.com/user-attachments/assets/ad78e093-4359-4c03-83ed-21bfc08d1227)
+
 
 ## 问题反馈
 
