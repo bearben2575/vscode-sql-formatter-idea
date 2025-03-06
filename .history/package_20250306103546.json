@@ -1,0 +1,46 @@
+{
+    "name": "sql-beautify",
+    "displayName": "SQL Beautify",
+    "description": "A VSCode extension for SQL text formatting",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0",
+        "node": ">=14.0.0"
+    },
+    "categories": [
+        "Formatters"
+    ],
+    "activationEvents": [
+        "onCommand:sql-beautify.formatText"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "sql-beautify.formatText",
+                "title": "Format SQL Text"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "sql-beautify.formatText",
+                "key": "ctrl+shift+f",
+                "mac": "cmd+shift+f",
+                "when": "editorHasSelection"
+            }
+        ]
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "start": "node --no-deprecation extension.js"
+    },
+    "dependencies": {
+        "sql-formatter": "^12.2.4"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.60.0",
+        "@types/node": "^16.x.x",
+        "eslint": "^8.x.x"
+    }
+}
