@@ -1,8 +1,29 @@
 {
     "name": "sql-beautify",
-    "displayName": "SQL Beautify",
+    "displayName": "SQL Beautify Pro",
     "description": "A VSCode extension for SQL text formatting",
-    "version": "0.0.1",
+    "version": "0.0.3",
+    "icon": "icon.png",
+    "publisher": "bearben2757",
+    "author": {
+        "name": "bearben2757"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bearben2575/vscode-sql-formatter-idea"
+    },
+    "bugs": {
+        "url": "https://github.com/bearben2575/vscode-sql-formatter-idea/issues"
+    },
+    "homepage": "https://github.com/bearben2575/vscode-sql-formatter-idea#readme",
+    "keywords": [
+        "sql",
+        "formatter",
+        "beautify",
+        "format",
+        "mybatis"
+    ],
     "engines": {
         "vscode": "^1.60.0",
         "node": ">=14.0.0"
@@ -28,19 +49,51 @@
                 "mac": "cmd+shift+f",
                 "when": "editorHasSelection"
             }
-        ]
+        ],
+        "configuration": {
+            "title": "SQL Beautify Pro",
+            "properties": {
+                "sql-beautify.indentSize": {
+                    "type": "number",
+                    "default": 4,
+                    "minimum": 1,
+                    "maximum": 8,
+                    "description": "缩进的空格数量"
+                },
+                "sql-beautify.keywordCase": {
+                    "type": "string",
+                    "enum": [
+                        "upper",
+                        "lower"
+                    ],
+                    "default": "upper",
+                    "description": "SQL 关键字的大小写形式"
+                },
+                "sql-beautify.lineStyle": {
+                    "type": "string",
+                    "enum": [
+                        "standard",
+                        "compact"
+                    ],
+                    "default": "standard",
+                    "description": "控制换行和缩进的方式"
+                }
+            }
+        }
     },
     "scripts": {
         "lint": "eslint .",
         "pretest": "npm run lint",
-        "start": "node --no-deprecation extension.js"
+        "start": "node --no-deprecation extension.js",
+        "vscode:prepublish": "echo Skipping lint"
     },
     "dependencies": {
+        "sharp": "^0.33.5",
         "sql-formatter": "^12.2.4"
     },
     "devDependencies": {
-        "@types/vscode": "^1.60.0",
         "@types/node": "^16.x.x",
+        "@types/vscode": "^1.60.0",
         "eslint": "^8.x.x"
     }
 }

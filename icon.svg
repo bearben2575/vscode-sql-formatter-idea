@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+    <!-- 背景 -->
+    <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1E1E1E"/>
+            <stop offset="100%" style="stop-color:#2D2D2D"/>
+        </linearGradient>
+        <linearGradient id="highlight" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#0078D4"/>
+            <stop offset="100%" style="stop-color:#0098FF"/>
+        </linearGradient>
+    </defs>
+
+    <!-- VS Code 风格背景 -->
+    <rect x="0" y="0" width="128" height="128" rx="16" fill="url(#bg)"/>
+
+    <!-- 代码行 - 未格式化 -->
+    <g transform="translate(20, 30)" fill="#6A737D">
+        <rect x="0" y="0" width="60" height="6" rx="2"/>
+        <rect x="0" y="12" width="88" height="6" rx="2"/>
+        <rect x="0" y="24" width="40" height="6" rx="2"/>
+    </g>
+
+    <!-- 箭头 -->
+    <g transform="translate(64, 64)" fill="url(#highlight)">
+        <path d="M-5,-15 L5,-15 L0,-5 Z"/>
+        <rect x="-2" y="-5" width="4" height="20" rx="1"/>
+    </g>
+
+    <!-- 格式化后的代码 -->
+    <g transform="translate(20, 82)">
+        <!-- 缩进指示线 -->
+        <line x1="12" y1="0" x2="12" y2="30" stroke="#454545" stroke-width="1"/>
+        
+        <!-- 格式化后的代码行 -->
+        <g fill="#4EC9B0">
+            <rect x="20" y="0" width="60" height="6" rx="2"/>
+            <rect x="20" y="12" width="88" height="6" rx="2"/>
+            <rect x="20" y="24" width="40" height="6" rx="2"/>
+        </g>
+        
+        <!-- 行号 -->
+        <g fill="#608B4E" font-family="Consolas" font-size="10">
+            <text x="0" y="6">1</text>
+            <text x="0" y="18">2</text>
+            <text x="0" y="30">3</text>
+        </g>
+    </g>
+
+    <!-- SQL 关键字高亮效果 -->
+    <g transform="translate(40, 82)">
+        <text font-family="Consolas" font-size="8" fill="#569CD6">SELECT</text>
+        <text x="0" y="12" font-family="Consolas" font-size="8" fill="#569CD6">FROM</text>
+        <text x="0" y="24" font-family="Consolas" font-size="8" fill="#569CD6">WHERE</text>
+    </g>
+</svg> 
