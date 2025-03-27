@@ -21,7 +21,7 @@
 ## ✨ 特性
 
 - 🎯 智能 SQL 格式化，支持多种 SQL 方言
-- 💡 完美支持 MyBatis 参数占位符（如 `#{paramName}`）
+- 💡 完美支持 MyBatis 参数占位符（如 `#{paramName}` 和 `${paramName}`）
 - 🔄 自动转换为字符串拼接格式
 - ⚡ 快速格式化，支持快捷键操作
 - 🎨 保持代码缩进和对齐
@@ -39,24 +39,47 @@
 
 1. 选择要格式化的 SQL 代码
 2. 使用以下方式之一触发格式化：
-   - 快捷键：`Ctrl+Shift+F`（Windows/Linux）或 `Cmd+Shift+F`（Mac）
-   - 命令面板：`Ctrl+Shift+P` 后输入 "Format SQL Text"
-   - 右键菜单：选择 "Format SQL Text"
+   - 标准格式化（带字符串拼接）：
+     - 快捷键：`Ctrl+Shift+F`（Windows/Linux）或 `Cmd+Shift+F`（Mac）
+     - 命令面板：`Ctrl+Shift+P` 后输入 "Format SQL Text"
+     - 右键菜单：选择 "Format SQL Text"
+   - 纯SQL格式化（不带字符串拼接）：
+     - 快捷键：`Ctrl+Alt+F`（Windows/Linux）或 `Cmd+Alt+F`（Mac）
+     - 命令面板：`Ctrl+Shift+P` 后输入 "Format Pure SQL"
+     - 右键菜单：选择 "Format Pure SQL"
 
 ## 📝 示例
 
-### 输入：
+### 标准格式化（带字符串拼接）：
+
+#### 输入：
 ```sql
 select u.name,u.age,d.dept_name from user u left join department d on u.dept_id=d.id where u.age>#{minAge} and u.create_time>=#{startTime}
 ```
 
-### 输出：
+#### 输出：
 ```sql
 SELECT u.name, u.age, d.dept_name " +
 "    FROM user u " +
 "    LEFT JOIN department d ON u.dept_id = d.id " +
 "    WHERE u.age > #{minAge} " +
 "    AND u.create_time >= #{startTime}
+```
+
+### 纯SQL格式化（不带字符串拼接）：
+
+#### 输入：
+```sql
+select u.name,u.age,d.dept_name from user u left join department d on u.dept_id=d.id where u.age>#{minAge} and u.create_time>=#{startTime}
+```
+
+#### 输出：
+```sql
+SELECT u.name, u.age, d.dept_name
+    FROM user u
+    LEFT JOIN department d ON u.dept_id = d.id
+    WHERE u.age > #{minAge}
+    AND u.create_time >= #{startTime}
 ```
 
 ## ⚙️ 配置选项
@@ -111,8 +134,8 @@ select column1, column2
   - 子查询和 JOIN 操作
 
 - **MyBatis 特性**：
-  - 简单参数：`#{paramName}`
-  - 对象参数：`#{user.name}`
+  - 简单参数：`#{paramName}` 和 `${paramName}`
+  - 对象参数：`#{user.name}` 和 `${user.name}`
   - 带类型参数：`#{amount,jdbcType=DECIMAL}`
   - 动态 SQL 标签
 
@@ -127,6 +150,14 @@ select column1, column2
 本项目采用 [MIT](LICENSE) 许可证。
 
 ## 📝 更新日志
+
+### 0.0.5 (2024-03-08)
+- ✨ 新增纯SQL格式化功能（不带字符串拼接）
+- ⌨️ 新增快捷键 `Ctrl+Alt+F`（Mac: `Cmd+Alt+F`）用于纯SQL格式化
+
+### 0.0.4 (2024-03-07)
+- ✨ 添加对 ${param} 占位符的支持
+- 📚 更新文档
 
 ### 0.0.3 (2024-03-06)
 - 🎨 添加插件图标

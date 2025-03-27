@@ -33,7 +33,7 @@ function activate(context) {
             
             // 保存所有 MyBatis 占位符
             const placeholders = [];
-            let tempSql = text.replace(/#{[^}]+}/g, (match) => {
+            let tempSql = text.replace(/[#$]{[^}]+}/g, (match) => {
                 placeholders.push(match);
                 return `__PLACEHOLDER_${placeholders.length - 1}__`;
             });
@@ -126,7 +126,57 @@ function activate(context) {
         }
     });
 
-    context.subscriptions.push(disposable);
+    // 新增的纯SQL格式化命令
+    let pureSqlDisposable = vscode.commands.registerCommand('sql-beautify.formatPureSql', async function () {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+
+        const selection = editor.selection;
+        if (selection.isEmpty) {
+            return;
+        }
+
+        const text = editor.document.getText(selection);
+        
+        try {
+            // 获取用户配置
+            const config = getConfiguration();
+            
+            // 保存所有 MyBatis 占位符
+            const placeholders = [];
+            let tempSql = text.replace(/[#$]{[^}]+}/g, (match) => {
+                placeholders.push(match);
+                return `__PLACEHOLDER_${placeholders.length - 1}__`;
+            });
+
+            // 根据配置格式化SQL
+            const formattedSql = format(tempSql, {
+                language: 'sql',
+                indent: ' '.repeat(config.indentSize),
+                uppercase: config.keywordCase === 'upper',
+                linesBetweenQueries: 2
+            });
+
+            // 恢复占位符
+            let finalSql = formattedSql;
+            placeholders.forEach((placeholder, index) => {
+                finalSql = finalSql.replace(`__PLACEHOLDER_${index}__`, placeholder);
+            });
+
+            // 替换文本
+            await editor.edit(editBuilder => {
+                editBuilder.replace(selection, finalSql);
+            });
+
+        } catch (error) {
+            console.error('Format error:', error);
+            vscode.window.showErrorMessage(`格式化错误: ${error.message}`);
+        }
+    });
+
+    context.subscriptions.push(disposable, pureSqlDisposable);
 }
 
 function deactivate() {}

@@ -2,7 +2,7 @@
     "name": "sql-beautify",
     "displayName": "SQL Beautify Pro",
     "description": "A VSCode extension for SQL text formatting",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "icon": "icon.png",
     "publisher": "bearben2757",
     "author": {
@@ -26,13 +26,14 @@
     ],
     "engines": {
         "vscode": "^1.60.0",
-        "node": ">=14.0.0"
+        "node": ">=18.0.0"
     },
     "categories": [
         "Formatters"
     ],
     "activationEvents": [
-        "onCommand:sql-beautify.formatText"
+        "onCommand:sql-beautify.formatText",
+        "onCommand:sql-beautify.formatPureSql"
     ],
     "main": "./extension.js",
     "contributes": {
@@ -40,6 +41,10 @@
             {
                 "command": "sql-beautify.formatText",
                 "title": "Format SQL Text"
+            },
+            {
+                "command": "sql-beautify.formatPureSql",
+                "title": "Format Pure SQL"
             }
         ],
         "keybindings": [
@@ -47,6 +52,12 @@
                 "command": "sql-beautify.formatText",
                 "key": "ctrl+shift+f",
                 "mac": "cmd+shift+f",
+                "when": "editorHasSelection"
+            },
+            {
+                "command": "sql-beautify.formatPureSql",
+                "key": "ctrl+alt+f",
+                "mac": "cmd+alt+f",
                 "when": "editorHasSelection"
             }
         ],
