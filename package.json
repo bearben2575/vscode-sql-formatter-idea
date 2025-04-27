@@ -2,7 +2,7 @@
     "name": "sql-beautify",
     "displayName": "SQL Beautify Pro",
     "description": "A VSCode extension for SQL text formatting",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "icon": "icon.png",
     "publisher": "bearben2757",
     "author": {

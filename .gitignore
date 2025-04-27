@@ -4,5 +4,7 @@
 .DS_Store
 .env
 *.log
-.history/*
+# History files
+.history/
+.history
 node_modules/*

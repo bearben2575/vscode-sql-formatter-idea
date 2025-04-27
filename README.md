@@ -22,10 +22,11 @@
 
 - 🎯 智能 SQL 格式化，支持多种 SQL 方言
 - 💡 完美支持 MyBatis 参数占位符（如 `#{paramName}` 和 `${paramName}`）
-- 🔄 自动转换为字符串拼接格式
-- ⚡ 快速格式化，支持快捷键操作
+- 🔄 支持两种格式化模式：字符串拼接格式和纯SQL格式
+- ⚡ 快速格式化，支持多种快捷键操作
 - 🎨 保持代码缩进和对齐
 - 🛠 可自定义的格式化规则
+- 📝 智能识别XML文件并自动调整缩进
 
 ## 📥 安装
 
@@ -50,9 +51,9 @@
 
 ## 📝 示例
 
-### 标准格式化（带字符串拼接）：
+### 在普通文件中格式化：
 
-#### 输入：
+#### 标准格式化（带字符串拼接）：
 ```sql
 select u.name,u.age,d.dept_name from user u left join department d on u.dept_id=d.id where u.age>#{minAge} and u.create_time>=#{startTime}
 ```
@@ -66,9 +67,7 @@ SELECT u.name, u.age, d.dept_name " +
 "    AND u.create_time >= #{startTime}
 ```
 
-### 纯SQL格式化（不带字符串拼接）：
-
-#### 输入：
+#### 纯SQL格式化：
 ```sql
 select u.name,u.age,d.dept_name from user u left join department d on u.dept_id=d.id where u.age>#{minAge} and u.create_time>=#{startTime}
 ```
@@ -80,6 +79,30 @@ SELECT u.name, u.age, d.dept_name
     LEFT JOIN department d ON u.dept_id = d.id
     WHERE u.age > #{minAge}
     AND u.create_time >= #{startTime}
+```
+
+### 在XML文件中格式化（自动添加额外缩进）：
+
+#### 标准格式化（带字符串拼接）：
+```xml
+<select id="getUserList" resultType="User">
+        SELECT u.name, u.age, d.dept_name " +
+        "    FROM user u " +
+        "    LEFT JOIN department d ON u.dept_id = d.id " +
+        "    WHERE u.age > #{minAge} " +
+        "    AND u.create_time >= #{startTime}
+</select>
+```
+
+#### 纯SQL格式化：
+```xml
+<select id="getUserList" resultType="User">
+        SELECT u.name, u.age, d.dept_name
+            FROM user u
+            LEFT JOIN department d ON u.dept_id = d.id
+            WHERE u.age > #{minAge}
+            AND u.create_time >= #{startTime}
+</select>
 ```
 
 ## ⚙️ 配置选项
@@ -150,6 +173,9 @@ select column1, column2
 本项目采用 [MIT](LICENSE) 许可证。
 
 ## 📝 更新日志
+
+### 0.0.6 (2024-03-27)
+- ✨ 新增XML文件自动缩进功能
 
 ### 0.0.5 (2024-03-08)
 - ✨ 新增纯SQL格式化功能（不带字符串拼接）

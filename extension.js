@@ -31,6 +31,10 @@ function activate(context) {
             // 获取用户配置
             const config = getConfiguration();
             
+            // 检查文件类型
+            const isXmlFile = editor.document.languageId === 'xml';
+            const extraIndent = isXmlFile ? '        ' : ''; // XML文件添加8个空格（2个tab）的额外缩进
+            
             // 保存所有 MyBatis 占位符
             const placeholders = [];
             let tempSql = text.replace(/[#$]{[^}]+}/g, (match) => {
@@ -41,9 +45,9 @@ function activate(context) {
             // 根据配置格式化SQL
             const formattedSql = format(tempSql, {
                 language: 'sql',
-                indent: ' '.repeat(config.indentSize),  // 使用配置的缩进大小
-                uppercase: config.keywordCase === 'upper', // 根据配置决定关键字大小写
-                linesBetweenQueries: 2 // 查询之间的空行数
+                indent: ' '.repeat(config.indentSize),
+                uppercase: config.keywordCase === 'upper',
+                linesBetweenQueries: 2
             });
 
             // 恢复占位符
@@ -62,17 +66,17 @@ function activate(context) {
                 formattedLines = [];
                 let currentLine = '';
                 lines.forEach((line, index) => {
-                    line = line.trim();
-                    if (line.startsWith('FROM') || line.startsWith('WHERE') || 
-                        line.startsWith('GROUP BY') || line.startsWith('HAVING') || 
-                        line.startsWith('ORDER BY')) {
+                    line = extraIndent + line.trim();
+                    if (line.startsWith(extraIndent + 'FROM') || line.startsWith(extraIndent + 'WHERE') || 
+                        line.startsWith(extraIndent + 'GROUP BY') || line.startsWith(extraIndent + 'HAVING') || 
+                        line.startsWith(extraIndent + 'ORDER BY')) {
                         if (currentLine) {
                             formattedLines.push(currentLine + ' " + ');
                         }
                         currentLine = `"${line}`;
                     } else {
                         if (currentLine) {
-                            currentLine += ' ' + line;
+                            currentLine += ' ' + line.substring(extraIndent.length);
                         } else {
                             currentLine = `${line}`;
                         }
@@ -84,7 +88,7 @@ function activate(context) {
             } else {
                 // 标准模式：每个子句单独一行
                 formattedLines = lines.map((line, index) => {
-                    line = line.trimEnd();
+                    line = extraIndent + line.trimEnd();
                     if (index === 0) {
                         return `${line} " + `;
                     } else if (index === lines.length - 1) {
@@ -144,6 +148,10 @@ function activate(context) {
             // 获取用户配置
             const config = getConfiguration();
             
+            // 检查文件类型
+            const isXmlFile = editor.document.languageId === 'xml';
+            const extraIndent = isXmlFile ? '        ' : ''; // XML文件添加8个空格（2个tab）的额外缩进
+            
             // 保存所有 MyBatis 占位符
             const placeholders = [];
             let tempSql = text.replace(/[#$]{[^}]+}/g, (match) => {
@@ -164,6 +172,11 @@ function activate(context) {
             placeholders.forEach((placeholder, index) => {
                 finalSql = finalSql.replace(`__PLACEHOLDER_${index}__`, placeholder);
             });
+
+            // 为XML文件添加额外缩进
+            if (isXmlFile) {
+                finalSql = finalSql.split('\n').map(line => extraIndent + line).join('\n');
+            }
 
             // 替换文本
             await editor.edit(editBuilder => {
