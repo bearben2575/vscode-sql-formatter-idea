@@ -172,6 +172,13 @@ select column1, column2
 
 本项目采用 [MIT](LICENSE) 许可证。
 
+## 🙏 致谢
+
+本项目使用了以下优秀的开源项目：
+
+- [sql-formatter](https://github.com/sql-formatter-org/sql-formatter) - SQL 格式化核心库 (MIT License)
+- [sharp](https://github.com/lovell/sharp) - 高性能图像处理库 (Apache-2.0 License)
+
 ## 📝 更新日志
 
 ### 0.0.6 (2024-03-27)
